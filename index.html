@@ -1,39 +1,126 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Finder - Home</title>
+    <title>Travel Made Easy</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <nav class="navbar">
-        <button onclick="window.location.href='index.html'">Home</button>
-        <button onclick="window.location.href='main.html'">Hotels</button>
-    </nav>
-    
-    <header class="hero">
-        
-        <h1>Welcome to Hotel Finder</h1>
-        <p>Find the best hotels for your perfect stay.</p>
-
-        <img src="./hotel-bedroom.webp" class="hero-image">
+    <header>
+        <h1>Travel Made Easy</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#reservations">Reservations</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
     
-    <section class="about">
-        <h2>About Us</h2>
-        <p>Hotel Finder is your go-to platform for finding the best hotel deals. Whether for business or leisure, we help you locate the perfect stay with ease.</p>
+    <section id="home">
+        <h2>Welcome to Travel Made Easy</h2>
+        <p>Your one-stop solution for planning the perfect trip.</p>
     </section>
     
-    <section class="contact">
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We provide top-rated travel experiences with seamless booking options.</p>
+    </section>
+    
+    <section id="reservations">
+        <div class="container">
+            <h2>Hotel Search</h2>
+            
+            <!-- Search Form -->
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="arrival">Arrival Date:</label>
+                    <input type="date" id="arrival" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="departure">Departure Date:</label>
+                    <input type="date" id="departure" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="roomQty">Rooms:</label>
+                    <input type="number" id="roomQty" min="1" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="travelPurpose">Travel Purpose:</label>
+                    <select id="travelPurpose">
+                        <option value="leisure">Leisure</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderBy">Order By:</label>
+                    <select id="orderBy">
+                        <option value="popularity">Popularity</option>
+                        <option value="distance">Distance</option>
+                        <option value="class_descending">Class (Descending)</option>
+                        <option value="class_ascending">Class (Ascending)</option>
+                        <option value="deals">Deals</option>
+                        <option value="review_score">Review Score</option>
+                        <option value="price">Price</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Search</button>
+            </form>
+            
+            <!-- Toggle Filter Button -->
+            <button id="toggleFilters">Show Filters</button>
+            
+            <!-- Filters Section (Initially Hidden) -->
+            <div id="filterSection" class="hidden">
+                <h3>Filters</h3>
+                <div class="filters">
+                    <div class="form-group">
+                        <label for="addressFilter">Address:</label>
+                        <select id="addressFilter">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="poolFilter">Swimming Pool:</label>
+                        <select id="poolFilter">
+                            <option value="">All</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reviewFilter">Review Score:</label>
+                        <select id="reviewFilter">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results Section -->
+            <div id="data-container"></div>
+        </div>
+    </section>
+
+    <section id="contact">
         <h2>Contact Us</h2>
-        <p>Email: contact@hotelfinder.com</p>
+        <p>Email: support@travelmadeeasy.com</p>
         <p>Phone: +123 456 7890</p>
     </section>
     
     <footer>
-        <p>&copy; 2025 Hotel Finder. All rights reserved.</p>
+        <p>&copy; 2025 Travel Made Easy</p>
     </footer>
+    
+    <script src="main.js"></script>
 </body>
 </html>
-

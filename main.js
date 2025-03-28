@@ -1,9 +1,19 @@
-// import require
+// Secure API key handling
+const API_KEY = process.env.RAPIDAPI_KEY || '';
 
-// console.log(process.env.API_KEY); 
-// console.log(process.env.PORT);
+// Show error if API key is missing
+if (!API_KEY) {
+    console.error('API key missing! Create .env file with RAPIDAPI_KEY');
+    const errorElement = document.createElement('div');
+    errorElement.className = 'api-error';
+    errorElement.innerHTML = `
+        <p>System configuration error - please contact support</p>
+        <p><small>Error: Missing API credentials</small></p>
+    `;
+    document.getElementById('searchForm').replaceWith(errorElement);
+}
 
-let allHotels = []; 
+let allHotels = [];
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -11,6 +21,9 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
 });
 
 async function fetchHotels() {
+    // Block requests if no API key
+    if (!API_KEY) return;
+
     const arrival = document.getElementById('arrival').value;
     const departure = document.getElementById('departure').value;
     const roomQty = document.getElementById('roomQty').value;
@@ -25,37 +38,49 @@ async function fetchHotels() {
     const apiUrl = `https://apidojo-booking-v1.p.rapidapi.com/properties/list-by-map?room_qty=${roomQty}&guest_qty=1&bbox=14.291283%2C14.948423%2C120.755688%2C121.136864&search_id=none&price_filter_currencycode=USD&categories_filter=class%3A%3A1%2Cclass%3A%3A2%2Cclass%3A%3A3&languagecode=en-us&travel_purpose=${travelPurpose}&order_by=${orderBy}&offset=0&arrival_date=${arrival}&departure_date=${departure}`;
 
     try {
+        // Show loading state
+        document.getElementById('data-container').innerHTML = '<div class="loading">Searching hotels...</div>';
+        
         const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
-                'x-rapidapi-key': 'c039f88865msh38e2b12047d3ed2p145ecajsn961cecd165c9',
+                'x-rapidapi-key': API_KEY,
                 'x-rapidapi-host': 'apidojo-booking-v1.p.rapidapi.com'
             }
         });
 
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+
         const data = await response.json();
-        console.log("API Response:", data);
         
         if (data.result) {
-            allHotels = data.result; // Store fetched data globally
+            allHotels = data.result;
             displayData(allHotels);
-            populateFilters(); // Populate filters dynamically
-            document.getElementById('filterSection').style.display = 'block'; // Show filters
+            populateFilters();
+            document.getElementById('filterSection').style.display = 'block';
             document.getElementById('toggleFilters').textContent = 'Hide Filters';
         } else {
-            document.getElementById('data-container').innerHTML = '<p>No results found.</p>';
+            document.getElementById('data-container').innerHTML = '<p class="no-results">No hotels found matching your criteria</p>';
         }
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('API Error:', error);
+        document.getElementById('data-container').innerHTML = `
+            <div class="error">
+                <p>Failed to load hotel data</p>
+                <button onclick="fetchHotels()">Retry</button>
+            </div>
+        `;
     }
 }
 
 function displayData(data) {
     const dataContainer = document.getElementById('data-container');
-    dataContainer.innerHTML = ''; // Clear previous results
+    dataContainer.innerHTML = '';
 
     if (data.length === 0) {
-        dataContainer.innerHTML = '<p>No results found.</p>';
+        dataContainer.innerHTML = '<p class="no-results">No matching hotels found</p>';
         return;
     }
 
@@ -111,10 +136,8 @@ function applyFilters() {
     displayData(filteredHotels);
 }
 
-// Toggle Filter Section
 document.getElementById('toggleFilters').addEventListener('click', function() {
     const filterSection = document.getElementById('filterSection');
     filterSection.style.display = filterSection.style.display === 'block' ? 'none' : 'block';
     this.textContent = filterSection.style.display === 'block' ? 'Hide Filters' : 'Show Filters';
 });
-

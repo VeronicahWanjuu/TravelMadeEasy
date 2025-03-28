@@ -38,6 +38,17 @@ header {
   box-shadow: var(--box-shadow);
 }
 
+.header-content {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.tagline {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 5px;
+}
+
 header h1 {
   text-align: center;
   margin: 0;
@@ -75,7 +86,7 @@ nav a.active {
 /* ===== SECTION STYLES ===== */
 section {
   margin-bottom: 2.5rem;
-  scroll-margin-top: 20px; /* For anchor link offset */
+  scroll-margin-top: 20px;
 }
 
 h2, h3 {
@@ -91,6 +102,47 @@ h2 {
 
 h3 {
   font-size: 1.4rem;
+}
+
+/* ===== HOME SECTION ===== */
+.intro-with-image {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.intro-text {
+  flex: 1;
+}
+
+.intro-image {
+  width: 40%;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-content {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.about-image {
+  width: 45%;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.feature-list {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+.feature-list li {
+  margin-bottom: 8px;
 }
 
 /* ===== RESERVATION SECTION ===== */
@@ -116,7 +168,7 @@ h3 {
   flex: 1 1 220px;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Prevent flex overflow */
+  min-width: 0;
 }
 
 label {
@@ -188,16 +240,15 @@ button:active {
   margin: 0 auto 20px;
 }
 
+/* ===== FILTER SECTION ===== */
 #filterSection {
+  display: none;
   margin-top: 25px;
   padding: 20px;
   background: #f9f9f9;
   border-radius: 8px;
   border: 1px solid var(--medium-gray);
-}
-
-.hidden {
-  display: none !important;
+  transition: all 0.3s ease;
 }
 
 /* ===== HOTEL RESULTS ===== */
@@ -243,13 +294,25 @@ button:active {
   text-decoration: underline;
 }
 
-/* ===== CONTACT & FOOTER ===== */
-#contact p {
-  margin-bottom: 12px;
-  text-align: center;
-  font-size: 1.1rem;
+/* ===== CONTACT SECTION ===== */
+.contact-content {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-top: 20px;
 }
 
+.contact-image {
+  width: 40%;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.contact-info {
+  flex: 1;
+}
+
+/* ===== FOOTER ===== */
 footer {
   background-color: var(--primary-color);
   color: var(--white);
@@ -266,6 +329,19 @@ footer {
     padding: 15px;
   }
   
+  .intro-with-image,
+  .about-content,
+  .contact-content {
+    flex-direction: column;
+  }
+  
+  .intro-image,
+  .about-image,
+  .contact-image {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
   header h1 {
     font-size: 1.8rem;
   }
@@ -280,7 +356,6 @@ footer {
     gap: 0.75rem;
   }
   
-  /* Enhanced touch targets */
   input, 
   select, 
   button {
@@ -344,4 +419,4 @@ footer {
     font-size: 0.8em;
     color: var(--dark-gray);
   }
-} 
+}

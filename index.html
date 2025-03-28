@@ -8,7 +8,10 @@
 </head>
 <body>
     <header>
-        <h1>Travel Made Easy</h1>
+        <div class="header-content">
+            <h1>Travel Made Easy</h1>
+            <p class="tagline">Find your perfect stay without the hassle</p>
+        </div>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -20,20 +23,39 @@
     </header>
     
     <section id="home">
-        <h2>Welcome to Travel Made Easy</h2>
-        <p>Your one-stop solution for planning the perfect trip.</p>
+        <div class="container">
+            <div class="intro-with-image">
+                <div class="intro-text">
+                    <h2>Welcome to Travel Made Easy</h2>
+                    <p>Your one-stop solution for planning the perfect trip. Created by Veronica, a travel enthusiast who understands what really matters when booking accommodations.</p>
+                </div>
+                <img src="images/hotel.image.jpg" alt="Beautiful hotel" class="intro-image">
+            </div>
+        </div>
     </section>
     
     <section id="about">
-        <h2>About Us</h2>
-        <p>We provide top-rated travel experiences with seamless booking options.</p>
+        <div class="container">
+            <h2>Our Approach</h2>
+            <div class="about-content">
+                <img src="images/hotel.image2.jpg" alt="Hotel amenities" class="about-image">
+                <div class="about-text">
+                    <p>After one too many disappointing hotel experiences, I built this platform to focus on what travelers actually care about:</p>
+                    <ul class="feature-list">
+                        <li>Accurate location details</li>
+                        <li>Verified amenities</li>
+                        <li>Honest review scores</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
     
+    <!-- Your existing reservations section EXACTLY as is -->
     <section id="reservations">
         <div class="container">
             <h2>Hotel Search</h2>
             
-            <!-- Search Form -->
             <form id="searchForm">
                 <div class="form-group">
                     <label for="arrival">Arrival Date:</label>
@@ -74,11 +96,9 @@
                 <button type="submit">Search</button>
             </form>
             
-            <!-- Toggle Filter Button -->
             <button id="toggleFilters">Show Filters</button>
             
-            <!-- Filters Section (Initially Hidden) -->
-            <div id="filterSection" class="hidden">
+            <div id="filterSection">
                 <h3>Filters</h3>
                 <div class="filters">
                     <div class="form-group">
@@ -106,19 +126,26 @@
                 </div>
             </div>
             
-            <!-- Results Section -->
             <div id="data-container"></div>
         </div>
     </section>
 
     <section id="contact">
-        <h2>Contact Us</h2>
-        <p>Email: support@travelmadeeasy.com</p>
-        <p>Phone: +123 456 7890</p>
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <img src="images/hotel.image.3.jpg" alt="Hotel lobby" class="contact-image">
+                <div class="contact-info">
+                    <p>Email: support@travelmadeeasy.com</p>
+                    <p>Phone: +250702655454</p>
+                    <p>Have questions about your stay? Reach out anytime.</p>
+                </div>
+            </div>
+        </div>
     </section>
     
     <footer>
-        <p>&copy; 2025 Travel Made Easy</p>
+        <p>&copy; 2025 Travel Made Easy | Created by Veronica</p>
     </footer>
     
     <script src="main.js"></script>

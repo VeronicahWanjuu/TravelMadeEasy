@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Search</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Hotel Search</h2>
+
+        <!-- Search Form -->
+        <form id="searchForm">
+            <div class="form-group">
+                <label for="arrival">Arrival Date:</label>
+                <input type="date" id="arrival" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departure">Departure Date:</label>
+                <input type="date" id="departure" required>
+            </div>
+
+            <div class="form-group">
+                <label for="roomQty">Rooms:</label>
+                <input type="number" id="roomQty" min="1" value="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="travelPurpose">Travel Purpose:</label>
+                <select id="travelPurpose">
+                    <option value="leisure">Leisure</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="orderBy">Order By:</label>
+                <select id="orderBy">
+                    <option value="popularity">Popularity</option>
+                    <option value="distance">Distance</option>
+                    <option value="class_descending">Class (Descending)</option>
+                    <option value="class_ascending">Class (Ascending)</option>
+                    <option value="deals">Deals</option>
+                    <option value="review_score">Review Score</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Toggle Filter Button -->
+        <button id="toggleFilters">Show Filters</button>
+
+        <!-- Filters Section (Initially Hidden) -->
+        <div id="filterSection" class="hidden">
+            <h3>Filters</h3>
+            <div class="filters">
+                <div class="form-group">
+                    <label for="addressFilter">Address:</label>
+                    <select id="addressFilter" onchange="applyFilters()">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="poolFilter">Swimming Pool:</label>
+                    <select id="poolFilter" onchange="applyFilters()">
+                        <option value="">All</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewFilter">Review Score:</label>
+                    <select id="reviewFilter" onchange="applyFilters()">
+                        <option value="">All</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="data-container"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
+

@@ -312,7 +312,7 @@ button:active {
   flex: 1;
 }
 
-/* ===== ERROR & LOADING STATES (NEW ADDITIONS) ===== */
+/* ===== ERROR & LOADING STATES ===== */
 .error-message {
   padding: 15px;
   background-color: #ffebee;

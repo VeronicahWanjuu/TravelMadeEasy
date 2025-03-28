@@ -83,7 +83,7 @@ async function fetchHotels() {
     try {
         showLoading(); // Show loading state
 
-        // API key part kept exactly as in original code
+        // API key 
         const apiKey = (typeof CONFIG !== 'undefined' && CONFIG.RAPID_API_KEY) 
             ? CONFIG.RAPID_API_KEY 
             : 'c039f88865msh38e2b12047d3ed2p145ecajsn961cecd165c9';
@@ -123,7 +123,7 @@ async function fetchHotels() {
     }
 }
 
-// Rest of your original functions remain exactly the same
+// functions
 function displayData(data) {
     const dataContainer = document.getElementById('data-container');
     dataContainer.innerHTML = '';
@@ -197,7 +197,7 @@ document.getElementById('toggleFilters').addEventListener('click', function() {
     this.textContent = filterSection.style.display === 'block' ? 'Hide Filters' : 'Show Filters';
 });
 
-// Add event listener for the filter button if it exists
+// event listener
 const filterButton = document.getElementById('applyFilters');
 if (filterButton) {
     filterButton.addEventListener('click', applyFilters);

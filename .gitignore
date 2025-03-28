@@ -1,9 +1,2 @@
-# Environment files
 .env
-.env*
-
-# System files
-.DS_Store
-
-# Logs
-*.log
+config.js

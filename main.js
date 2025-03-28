@@ -5,6 +5,48 @@
 
 let allHotels = []; 
 
+// Show loading state
+function showLoading() {
+    const container = document.getElementById('data-container');
+    container.innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Searching for hotels...</p>
+        </div>
+    `;
+}
+
+// Show error message with dismiss button
+function showError(message) {
+    const container = document.getElementById('data-container');
+    container.innerHTML = `
+        <div class="error-message">
+            <p>${message}</p>
+            <button onclick="this.parentElement.remove()">Dismiss</button>
+        </div>
+    `;
+}
+
+// Validate date inputs
+function validateDates(arrival, departure) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const arrivalDate = new Date(arrival);
+    const departureDate = new Date(departure);
+
+    if (arrivalDate < today) {
+        showError('Arrival date cannot be in the past.');
+        return false;
+    }
+
+    if (departureDate <= arrivalDate) {
+        showError('Departure date must be after arrival date.');
+        return false;
+    }
+
+    return true;
+}
+
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
     fetchHotels();
@@ -17,15 +59,31 @@ async function fetchHotels() {
     const travelPurpose = document.getElementById('travelPurpose').value;
     const orderBy = document.getElementById('orderBy').value;
 
-    if (!arrival || !departure || roomQty < 1) {
-        alert('Please fill in all required fields.');
+    // Clear previous results
+    document.getElementById('data-container').innerHTML = '';
+
+    // Input validation
+    if (!arrival || !departure) {
+        showError('Please select both arrival and departure dates.');
+        return;
+    }
+
+    if (roomQty < 1) {
+        showError('Room quantity must be at least 1.');
+        return;
+    }
+
+    // Date validation
+    if (!validateDates(arrival, departure)) {
         return;
     }
 
     const apiUrl = `https://apidojo-booking-v1.p.rapidapi.com/properties/list-by-map?room_qty=${roomQty}&guest_qty=1&bbox=14.291283%2C14.948423%2C120.755688%2C121.136864&search_id=none&price_filter_currencycode=USD&categories_filter=class%3A%3A1%2Cclass%3A%3A2%2Cclass%3A%3A3&languagecode=en-us&travel_purpose=${travelPurpose}&order_by=${orderBy}&offset=0&arrival_date=${arrival}&departure_date=${departure}`;
 
     try {
-        // Use API key from config if available, otherwise use the hardcoded key for backward compatibility
+        showLoading(); // Show loading state
+
+        // API key part kept exactly as in original code
         const apiKey = (typeof CONFIG !== 'undefined' && CONFIG.RAPID_API_KEY) 
             ? CONFIG.RAPID_API_KEY 
             : 'c039f88865msh38e2b12047d3ed2p145ecajsn961cecd165c9';
@@ -38,30 +96,45 @@ async function fetchHotels() {
             }
         });
 
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+
         const data = await response.json();
         console.log("API Response:", data);
         
         if (data.result) {
-            allHotels = data.result; // Store fetched data globally
+            allHotels = data.result;
             displayData(allHotels);
-            populateFilters(); // Populate filters dynamically
-            document.getElementById('filterSection').style.display = 'block'; // Show filters
+            populateFilters();
+            document.getElementById('filterSection').style.display = 'block';
             document.getElementById('toggleFilters').textContent = 'Hide Filters';
         } else {
-            document.getElementById('data-container').innerHTML = '<p>No results found.</p>';
+            document.getElementById('data-container').innerHTML = `
+                <div class="no-results">
+                    <p>No hotels found matching your criteria.</p>
+                    <p>Try adjusting your search parameters.</p>
+                </div>
+            `;
         }
     } catch (error) {
         console.error('Error fetching data:', error);
-        document.getElementById('data-container').innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+        showError(`We encountered an issue: ${error.message}. Please try again later.`);
     }
 }
 
+// Rest of your original functions remain exactly the same
 function displayData(data) {
     const dataContainer = document.getElementById('data-container');
-    dataContainer.innerHTML = ''; // Clear previous results
+    dataContainer.innerHTML = '';
 
     if (data.length === 0) {
-        dataContainer.innerHTML = '<p>No results found.</p>';
+        dataContainer.innerHTML = `
+            <div class="no-results">
+                <p>No hotels match your current filters.</p>
+                <p>Try different filter settings.</p>
+            </div>
+        `;
         return;
     }
 

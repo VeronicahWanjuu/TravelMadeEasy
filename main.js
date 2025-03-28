@@ -25,10 +25,15 @@ async function fetchHotels() {
     const apiUrl = `https://apidojo-booking-v1.p.rapidapi.com/properties/list-by-map?room_qty=${roomQty}&guest_qty=1&bbox=14.291283%2C14.948423%2C120.755688%2C121.136864&search_id=none&price_filter_currencycode=USD&categories_filter=class%3A%3A1%2Cclass%3A%3A2%2Cclass%3A%3A3&languagecode=en-us&travel_purpose=${travelPurpose}&order_by=${orderBy}&offset=0&arrival_date=${arrival}&departure_date=${departure}`;
 
     try {
+        // Use API key from config if available, otherwise use the hardcoded key for backward compatibility
+        const apiKey = (typeof CONFIG !== 'undefined' && CONFIG.RAPID_API_KEY) 
+            ? CONFIG.RAPID_API_KEY 
+            : 'c039f88865msh38e2b12047d3ed2p145ecajsn961cecd165c9';
+
         const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
-                'x-rapidapi-key': CONFIG.RAPID_API_KEY,
+                'x-rapidapi-key': apiKey,
                 'x-rapidapi-host': 'apidojo-booking-v1.p.rapidapi.com'
             }
         });
@@ -47,6 +52,7 @@ async function fetchHotels() {
         }
     } catch (error) {
         console.error('Error fetching data:', error);
+        document.getElementById('data-container').innerHTML = `<p>Error fetching data: ${error.message}</p>`;
     }
 }
 
@@ -117,3 +123,9 @@ document.getElementById('toggleFilters').addEventListener('click', function() {
     filterSection.style.display = filterSection.style.display === 'block' ? 'none' : 'block';
     this.textContent = filterSection.style.display === 'block' ? 'Hide Filters' : 'Show Filters';
 });
+
+// Add event listener for the filter button if it exists
+const filterButton = document.getElementById('applyFilters');
+if (filterButton) {
+    filterButton.addEventListener('click', applyFilters);
+}
